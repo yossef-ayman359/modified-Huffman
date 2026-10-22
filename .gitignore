@@ -1,2 +1,57 @@
+
+# VS Code
 .vscode/
+
+# Python cache
 __pycache__/
+*.py[cod]
+*$py.class
+
+# Text files
+*.txt
+
+# Binary files
+*.bin
+*.dat
+*.exe
+*.dll
+*.so
+*.dylib
+*.o
+*.obj
+*.class
+
+# Compressed files
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build files
+build/
+dist/
+*.egg-info/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+
+# IDE files
+.idea/

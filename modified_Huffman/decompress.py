@@ -1,4 +1,4 @@
-# final_codes {'11'':'a', ...}, bitstream 11100110...
+from .utils import load_compressed, write_text
 
 def deCompress(bitStream, finalCodes):
     s = temp = ''
@@ -11,3 +11,7 @@ def deCompress(bitStream, finalCodes):
             temp = ''
 
     return s;
+
+def decompress_file(in_path, out_path):
+    bitstream, codes = load_compressed(in_path)
+    write_text(out_path, deCompress(bitstream, codes))

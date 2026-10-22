@@ -2,6 +2,7 @@ from collections import Counter
 import heapq
 import math
 from itertools import count
+from .utils import read_text, save_compressed
 
 OTHERS_TOKEN = object()
 
@@ -189,3 +190,11 @@ def modified_huffman_encode(text, min_limit):
     }
 
     return bitstream, final_codes, details
+
+def compress_file(in_path, out_path, min_limit):
+    text = read_text(in_path)
+    if not text:
+        raise ValueError("Input file is empty")
+    bitstream, final_codes, details = modified_huffman_encode(text, min_limit)
+    save_compressed(out_path, bitstream, final_codes)
+    return details
