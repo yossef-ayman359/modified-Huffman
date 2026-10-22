@@ -2,6 +2,7 @@ from collections import Counter
 import heapq
 import math
 from itertools import count
+from .utils import read_text, save_compressed
 
 OTHERS_TOKEN = object()
 
@@ -138,35 +139,18 @@ def build_modified_codes(
             huffman_codes[OTHERS_TOKEN] + original_codes[symbol]
         )
 
-    # Reverse the dictionary:
-    # code becomes the key, and symbol becomes the value.
-    reversed_codes = {
-        code: symbol
-        for symbol, code in final_codes.items()
-    }
-
-    return reversed_codes
+    return final_codes
 
 
 def encode_text(text, codes):
-    # The codes dictionary is now {code: symbol}.
-    # Reverse it locally to get {symbol: code} for encoding.
-    symbol_to_code = {
-        symbol: code
-        for code, symbol in codes.items()
-    }
-
-    missing_symbols = set(text) - set(symbol_to_code)
+    missing_symbols = set(text) - set(codes)
 
     if missing_symbols:
         raise ValueError(
             f"Missing codes for symbols: {missing_symbols!r}"
         )
 
-    return "".join(
-        symbol_to_code[symbol]
-        for symbol in text
-    )
+    return "".join(codes[symbol] for symbol in text)
 
 
 def modified_huffman_encode(text, min_limit):
@@ -206,3 +190,11 @@ def modified_huffman_encode(text, min_limit):
     }
 
     return bitstream, final_codes, details
+
+def compress_file(in_path, out_path, min_limit):
+    text = read_text(in_path)
+    if not text:
+        raise ValueError("Input file is empty")
+    bitstream, final_codes, details = modified_huffman_encode(text, min_limit)
+    save_compressed(out_path, bitstream, final_codes)
+    return details
